@@ -43,7 +43,7 @@ function Navigation({ isScrolled }) {
 					<input
 						data-testid="search-input"
 						type="text"
-						className={`${!loginInfo && 'hidden'} bg-transparent border border-2 text-center border-gray-400 rounded-md p-1 w-96 h-8 text-white placeholder-gray-400`}
+						className={`${!loginInfo && 'hidden'} bg-transparent border-2 text-center border-gray-400 rounded-md p-1 w-96 h-8 text-white placeholder-gray-400`}
 						placeholder="검색"
 						value={search}
 						onChange={(e) => lodash.clamp(setSearch(e.target.value))}
