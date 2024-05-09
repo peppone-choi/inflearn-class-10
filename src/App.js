@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Route, Router, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
-import { useNavigate } from 'react-router-dom';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-
-const loginInfoInit = localStorage.getItem('loginInfo')
-	? JSON.parse(localStorage.getItem('loginInfo'))
-	: null;
 
 function App() {
-	const navigator = useNavigate();
-	const [loginInfo, setLoginInfo] = useState(loginInfoInit);
+	const loginInfo = localStorage.getItem('loginInfo')
+		? JSON.parse(localStorage.getItem('loginInfo'))
+		: null;
 
 	return (
 		<div className="App">

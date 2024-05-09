@@ -2,7 +2,10 @@ import React from 'react';
 
 function MainMovie() {
 	return (
-		<div className="relative w-11/12 overflow-hidden bg-cover bg-center bg-[url(https://loremflickr.com/3000/2000)]">
+		<div
+			className="relative w-11/12 overflow-hidden bg-cover bg-center bg-[url(https://loremflickr.com/3000/2000)]"
+			data-testid="main-movie"
+		>
 			<div className="h-[32rem] bg-gradient-to-t from-black">
 				<div className="absolute top-40 left-32 text-6xl font-bold">고양이는 즐거워</div>
 				<div className="absolute top-60 left-32 text-md w-[38rem]">
