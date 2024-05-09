@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { Route, Router, Routes, useLocation } from 'react-router-dom';
+import Layout from './Layout';
+import LandingPage from './pages/LandingPage';
+import MainPage from './pages/MainPage';
+import { useNavigate } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const loginInfoInit = localStorage.getItem('loginInfo')
+	? JSON.parse(localStorage.getItem('loginInfo'))
+	: null;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const navigator = useNavigate();
+	const [loginInfo, setLoginInfo] = useState(loginInfoInit);
+
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route index element={loginInfo ? <MainPage /> : <LandingPage />} />
+				</Route>
+			</Routes>
+		</div>
+	);
 }
 
 export default App;
