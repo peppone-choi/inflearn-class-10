@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
+import { tmdbInstance } from './apis/Axios';
+import requests from './apis/requests';
 
 function App() {
 	const loginInfo = localStorage.getItem('loginInfo')

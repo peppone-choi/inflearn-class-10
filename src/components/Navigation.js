@@ -7,7 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import lodash from 'lodash';
 
-function Navigation({ isScrolled }) {
+function Navigation() {
+	const [isScrolled, setIsScrolled] = useState(false);
 	const [logoutClicked, setLogoutClicked] = useState(false);
 	const [search, setSearch] = useState('');
 	const navigate = useNavigate();
@@ -15,6 +16,20 @@ function Navigation({ isScrolled }) {
 	const loginInfo = localStorage.getItem('loginInfo')
 		? JSON.parse(localStorage.getItem('loginInfo'))
 		: null;
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > 50) {
+				setIsScrolled(true);
+			} else {
+				setIsScrolled(false);
+			}
+		};
+		window.addEventListener('scroll', handleScroll);
+		return () => {
+			lodash.throttle(() => window.removeEventListener('scroll', handleScroll), 1000);
+		};
+	}, []);
 
 	const handleGoogleLogout = async () => {
 		googleLogout();
@@ -27,14 +42,15 @@ function Navigation({ isScrolled }) {
 		localStorage.setItem('loginInfo', JSON.stringify({ email, name, picture }));
 		navigate(0);
 	};
+
 	return (
 		<div data-testid="navigation-component">
 			<div
-				className={`fixed w-full h-16 items-center flex justify-between z-50 top-0 bg-black bg-opacity-55 ${isScrolled && 'bg-opacity-30'}`}
+				className={`fixed w-full h-16 items-center flex justify-between z-50 top-0 bg-black ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-20'}`}
 			>
 				<img
 					data-testid="disney-plus-logo"
-					className="w-28 h-28 p-3 cursor-pointer"
+					className="p-3 cursor-pointer w-28 h-28"
 					src="https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg"
 					alt="disney plus logo"
 					onClick={() => navigate('/')}
@@ -73,14 +89,14 @@ function Navigation({ isScrolled }) {
 								data-testid="profile-picture"
 								src={loginInfo.picture}
 								alt={loginInfo.name}
-								className="size-10 rounded-full m-6 cursor-pointer shadow-md hover:shadow-lg"
+								className="m-6 rounded-full shadow-md cursor-pointer size-10 hover:shadow-lg"
 								onClick={() => setLogoutClicked(!logoutClicked)}
 							/>
 						</div>
 					) : (
 						<div
 							data-testid="login-button"
-							className="cursor-pointer m-4 p-2 bg-slate-800 rounded-md shadow-md hover:bg-slate-600 hover:shadow-lg"
+							className="p-2 m-4 rounded-md shadow-md cursor-pointer bg-slate-800 hover:bg-slate-600 hover:shadow-lg"
 							onClick={() => {
 								const login = document.querySelector('[aria-labelledby="button-label"]');
 								login.click();
