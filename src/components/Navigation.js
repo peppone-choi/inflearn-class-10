@@ -13,9 +13,14 @@ function Navigation() {
 	const [search, setSearch] = useState('');
 	const navigate = useNavigate();
 	const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-	const loginInfo = localStorage.getItem('loginInfo')
+	let loginInfo = localStorage.getItem('loginInfo')
 		? JSON.parse(localStorage.getItem('loginInfo'))
 		: null;
+
+	const handleChange = (e) => {
+		setSearch(e.target.value);
+		navigate(`/search?q=${e.target.value}`);
+	};
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -34,6 +39,8 @@ function Navigation() {
 	const handleGoogleLogout = async () => {
 		googleLogout();
 		localStorage.removeItem('loginInfo');
+		setLogoutClicked(false);
+		loginInfo = null;
 		navigate(0);
 	};
 
@@ -62,7 +69,7 @@ function Navigation() {
 						className={`${!loginInfo && 'hidden'} bg-transparent border-2 text-center border-gray-400 rounded-md p-1 w-96 h-8 text-white placeholder-gray-400`}
 						placeholder="검색"
 						value={search}
-						onChange={(e) => lodash.clamp(setSearch(e.target.value))}
+						onChange={handleChange}
 					/>
 				</div>
 				<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>

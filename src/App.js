@@ -4,8 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
 import LandingPage from './pages/LandingPage';
 import MainPage from './pages/MainPage';
-import { tmdbInstance } from './apis/Axios';
-import requests from './apis/requests';
+import SearchPage from './pages/SearchPage';
+import { Reset } from 'styled-reset';
+import InfoPage from './pages/InfoPage';
 
 function App() {
 	const loginInfo = localStorage.getItem('loginInfo')
@@ -14,9 +15,12 @@ function App() {
 
 	return (
 		<div className="App">
+			<Reset />
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route index element={loginInfo ? <MainPage /> : <LandingPage />} />
+					<Route path=":id/:type" element={<InfoPage />} />
+					<Route path="search" element={<SearchPage />} />
 				</Route>
 			</Routes>
 		</div>
